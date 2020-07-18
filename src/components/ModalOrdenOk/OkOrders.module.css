@@ -10,8 +10,16 @@
     margin-left: 63%;
     margin-top: 10%;
 }
-.pedidolisto{
-    
+.modalContent{
+  background-color:#C4C4C4;
+  font-family: 'Sedgwick Ave',
+  cursive;
+
+}
+.olitas{
+  width: 55%;
+  margin-left: 48%;
+  margin-bottom: -3%;
 }
 
 @media (min-width: 1024px){

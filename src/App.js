@@ -34,30 +34,28 @@ class App extends Component {
       });
     }
 
-    //Función para probar flujo con logout automático al cerrar app (solo prueba)
-    if (firebase.auth().currentUser !== null) {
-      setTimeout(() => {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            this.setState({
-              auth: false,
-              role: null,
-            });
-            console.log(
-              "Sesión cerrada correctamente",
-              this.state.auth,
-              this.state.role
-            );
-            alert(
-              "Sesión cerrada automáticamente (prueba) - Después de esto se debería redireccionar a la pantalla de inicio."
-            );
-          });
-      }, 8000);
-    }
+
   });
 
+    signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.setState({
+          auth: false,
+          role: null,
+        });
+        console.log(
+          "Sesión cerrada correctamente",
+          this.state.auth,
+          this.state.role
+        );
+        alert(
+          "Sesión cerrada"
+        );
+      });
+  }
   render() {
     let path = null;
     let pathRole = null;
@@ -81,7 +79,7 @@ class App extends Component {
           </Route>
           <Route path="/mesero" exact>
             <Header />
-        
+
             <section className={style.mainContainer}>
               <OkOrders className={style.pedidolisto} />
               <img
@@ -105,26 +103,25 @@ class App extends Component {
 
             </section>
           </Route>
-         
+
           <Route path="/mesero/menu-desayuno" exact>
             <Header />
             <Link to="/mesero">
             <img src={atras} className={style.back} alt="atras" />
-            <img src={close} className={style.closeto}></img>
 
             </Link>
-           
+            <img src={close} className={style.closeto}  onClick={() => this.signOut()}></img>
 
             <Menu type="breakfast" />
-            
+
 
 
           </Route>
           <Route path="/mesero/menu-almuerzo-cena" exact>
             <Header />
-            <img src={close} className={style.closeto}></img>
+            <img src={close} className={style.closeto} onClick={() => this.signOut()}></img>
             <Menu type="lunch-dinner" />
-            
+
 
             <Link to="/mesero">
             <img src={atras} className={style.backto} alt="atras" />
@@ -132,7 +129,7 @@ class App extends Component {
           </Route>
           <Route path="/chef" exact>
             <Header />
-            <img src={close} className={style.closetochef}></img>
+            <img src={close} className={style.closetochef}  onClick={() => this.signOut()}></img>
 
             <IncomingOrders />
           </Route>
