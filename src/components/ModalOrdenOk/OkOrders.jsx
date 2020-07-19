@@ -24,23 +24,24 @@ class OkOrders extends Component {
   }
   arr = [];
 
-componentDidMount(){
-  const db = firebase.firestore();
-    db.collection("resumen orden").where('state', '==', 'Listo para entrega').onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        this.arr.push({
-          date: this.formattingDate(doc.data().timestamp),
-          table: doc.data().table,
+  componentDidMount(){
+    const db = firebase.firestore();
+      db.collection("resumen orden").where('state', '==', 'Listo para entrega').orderBy("timestamp", "asc").onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.arr.push({
+            date: this.formattingDate(doc.data().timestamp),
+            table: doc.data().table,
+            orderId: doc.id
+          });
+          console.log(doc)
         });
-        console.log(doc)
+        this.setState({
+          info: this.arr,
+        });
+  
       });
-      this.setState({
-        info: this.arr,
-      });
-
-    });
-
-}
+  
+  }
 
 delivery =()=>{
   this.toggle()
@@ -57,10 +58,10 @@ componentDidUpdate() {
   this.orderCheck= this.state.info.map ( order => {
     let dates = order.date;
     let tables = order.table;
-      return(
-      <React.Fragment> <li> N° mesa :  {tables}</li><span> Hora termino preparacion {dates}</span>
+    return(
+      <React.Fragment key={order.orderId}> <li> N° mesa :  {tables}</li><span> Hora termino preparacion {dates}</span>
 
-  </React.Fragment>
+      </React.Fragment>
             )
 
   }

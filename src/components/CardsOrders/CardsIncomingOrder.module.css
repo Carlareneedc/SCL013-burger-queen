@@ -18,6 +18,15 @@
 .olasCards {
   width: 100%;
 }
+.nohay{
+    color: white;
+    font-family: "Sedgwick Ave", cursive;
+    display: flex;
+    margin-top: 37%;
+    margin-left: 111%;
+    font-size: 3rem;
+    text-align: center;
+}
 .nTable {
   color: black;
   font-family: "Sedgwick Ave", cursive;
@@ -62,5 +71,12 @@
 @media (min-width: 1024px) {
   .incomingOrders {
     margin-top: -5%;
+  }
+
+  .nohay{
+    color: white;
+    font-family: "Sedgwick Ave", cursive;
+    margin-top: 30%;
+    margin-left: 127%;
   }
 }

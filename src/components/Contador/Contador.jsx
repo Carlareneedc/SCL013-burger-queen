@@ -3,6 +3,7 @@ import style from '../../components/CardsOrders/CardsIncomingOrder.module.css'
 import {
   Button
 } from 'reactstrap';
+import firebase from 'firebase';
 
 class Contador extends Component {
   constructor(props) {
@@ -41,9 +42,23 @@ class Contador extends Component {
     }
   }
 
+  sendToFirebase = (id, minutes, seconds) => {
+    console.log(id, minutes, seconds);
+    firebase.firestore().collection('resumen orden').doc(`${id}`).update({
+      state: 'Listo para entrega',
+      readyTime: firebase.firestore.FieldValue.serverTimestamp(),
+      delay: [minutes, seconds]
+
+    }).then(() => {
+
+      console.log('Enviado a Firebase como "Listo para entregar"');
+      window.location.reload(); //actualizar el navegador después de cambiar estado de un pedido
+    })
+  }
+
   timerHandler(id, seconds, minutes) {
     clearInterval(this.timer)
-    this.props.send(id, minutes, seconds);
+    this.sendToFirebase(id, minutes, seconds);
     //console.log('id: ' + id, 'minutos: ' + minutes, 'segundos: ' + seconds);
   }
   countDown() {

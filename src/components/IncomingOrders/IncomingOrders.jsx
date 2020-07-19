@@ -9,9 +9,10 @@ class IncomingOrders extends Component {
 
   arr = [];
 
+
   componentDidMount() {
     const db = firebase.firestore();
-    db.collection("resumen orden").where('state', '==', 'Pendiente').onSnapshot((querySnapshot) => {
+    db.collection("resumen orden").where('state', '==', 'Pendiente').orderBy('timestamp', 'asc').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.arr.push({
           products: doc.data().information,
@@ -25,12 +26,11 @@ class IncomingOrders extends Component {
         orders: this.arr,
       });
     });
+
   }
 
-  componentDidUpdate() {
-    /* console.log(this.state.orders[0]);
-    console.log('ESTADO ACTUALIZADO!') */
-  }
+    
+  
 
   render() {
     return (

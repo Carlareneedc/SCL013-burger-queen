@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card, CardBody,
   CardTitle,
@@ -10,16 +10,9 @@ import Contador from '../Contador/Contador';
 import firebase from 'firebase';
 
  const CardsIncomingOrders = (props) => {
+   const [cardState, setCardState] = useState('');
 
-   const sendToFirebase = (id, minutes, seconds) => {
-     console.log(id, minutes, seconds);
-     firebase.firestore().collection('resumen orden').doc(`${id}`).update({
-       state: 'Listo para entrega',
-       readyTime: firebase.firestore.FieldValue.serverTimestamp(),
-       delay: [minutes, seconds]
-
-     }).then(() => { console.log('Enviado a Firebase como "Listo para entregar"') })
-   }
+    let parentState = props.data.orders;
 
     let orders = null;
     const formattingDate = (date) => {
@@ -27,19 +20,23 @@ import firebase from 'firebase';
       const splitDate = formattedDate.split(" ");
       return `${splitDate[4]}`;
     };
-    if (props.data.orders[0].products !== undefined) {
+
+
+    if (parentState[0] !== undefined) {
       orders = props.data.orders.map(order => {
         let products = order.products;
         let orderId = order.id;
+        
+        if (order.products !== undefined) {
         let names = products.map(product => {
           return (
           <React.Fragment
-              key={Math.floor(Math.random() * 1000)}><li>{product.name}</li></React.Fragment>
+              key={product.name + 1}><li>{product.name}</li></React.Fragment>
           )
         })
 
         return (
-          <React.Fragment key={Math.floor(Math.random() * 1000)}>
+          <React.Fragment key={orderId}>
             <Card id={orderId}
               style={({ width: "15rem" }, { marginBottom: "4rem" })}
               className={style.motherCards}>
@@ -52,7 +49,7 @@ import firebase from 'firebase';
                 <ul>{names}</ul>
               </CardBody>
               <div>
-                <Contador send={sendToFirebase} id={orderId} />
+                <Contador id={orderId} />
                 <img src={olasCard} className={style.olasCards} alt="olas" />
               </div>
              </Card>
@@ -60,16 +57,20 @@ import firebase from 'firebase';
                 
           </React.Fragment>
         );
+        }
       })
+    } else {
+      orders = <p className={style.nohay}>No hay pedidos entrantes</p>
     }
+      
 
     return (
       <React.Fragment>
 
-<h1 className={style.chef}>Chef</h1>
+      <h1 className={style.chef}>Chef</h1>
           <h2 className={style.incomingOrders}> Pedidos entrantes</h2>
       <div className={style.fatherCards}>
-
+          {console.log(cardState)}
           {orders}
 
       </div>
