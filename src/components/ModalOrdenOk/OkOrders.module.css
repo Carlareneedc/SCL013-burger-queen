@@ -4,12 +4,7 @@
     position: absolute;
 }
 
-.cerrar{
-    position: absolute;
-    width: 5%;
-    margin-left: 63%;
-    margin-top: 10%;
-}
+
 .modalContent{
   background-color:#C4C4C4;
   font-family: 'Sedgwick Ave',

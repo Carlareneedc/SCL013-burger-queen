@@ -79,8 +79,9 @@ class App extends Component {
           </Route>
           <Route path="/mesero" exact>
           {this.state.auth === false ? <Redirect to="/"></Redirect> : null}
-            <Header />
 
+            <Header />
+             <img src={close} className={style.cerrar} onClick={() => this.signOut()} alt="cerrar"></img>
             <section className={style.mainContainer}>
               <OkOrders className={style.pedidolisto} />
               <img

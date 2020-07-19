@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import ok from '../../assets/images/ok.png';
 import firebase from 'firebase';
 import style from './OkOrders.module.css';
-import cerrar from '../../assets/images/cerrarsesion.png';
 import olitas from '../../assets/images/olitas.png'
 
 class OkOrders extends Component {
@@ -70,26 +70,7 @@ componentDidUpdate() {
   console.log('trajo los pedidos')
 }
 
-signOut = () => {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      this.setState({
-        auth: false,
-        role: null,
-      });
-      console.log(
-        "Sesión cerrada correctamente",
-        this.state.auth,
-        this.state.role
-      );
-      alert(
-        "Sesión cerrada"
-      );
-    });
 
-  }
 
 
   render() {
@@ -102,7 +83,7 @@ signOut = () => {
                 alt="ok"
                 onClick={()=> this.delivery()}
               ></img>
-              <img src={cerrar} className={style.cerrar} onClick={() => this.signOut()} alt="cerrar"></img>
+             
 
         <Modal contentClassName={style.modalContent} isOpen={this.state.modal} toggle={this.toggle}  >
           <ModalHeader  toggle={this.toggle}>Pedidos listo para entrega</ModalHeader>
