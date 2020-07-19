@@ -52,7 +52,7 @@ class Contador extends Component {
     }).then(() => {
 
       console.log('Enviado a Firebase como "Listo para entregar"');
-      //window.location.reload(); //actualizar el navegador después de cambiar estado de un pedido
+      window.location.reload(); //actualizar el navegador después de cambiar estado de un pedido
     })
   }
 
