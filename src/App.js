@@ -78,6 +78,7 @@ class App extends Component {
             <ModalLogin />
           </Route>
           <Route path="/mesero" exact>
+          {this.state.auth === false ? <Redirect to="/"></Redirect> : null}
             <Header />
 
             <section className={style.mainContainer}>
@@ -92,9 +93,11 @@ class App extends Component {
                 <h4 className={style.meseroH1}>Mesero</h4>
                 <Link to="/mesero/menu-desayuno">
                   <Button className={style.optionBtn}>Menú desayuno</Button>
+                  
                 </Link>
 
                 <Link to="/mesero/menu-almuerzo-cena">
+                  
                   <Button className={style.optionBtn}>
                     Menú almuerzo y cena
                   </Button>
@@ -105,6 +108,7 @@ class App extends Component {
           </Route>
 
           <Route path="/mesero/menu-desayuno" exact>
+          {this.state.auth === false ? <Redirect to="/"></Redirect> : null}
             <Header />
             <Link to="/mesero">
             <img src={atras} className={style.back} alt="atras" />
@@ -118,6 +122,7 @@ class App extends Component {
 
           </Route>
           <Route path="/mesero/menu-almuerzo-cena" exact>
+          {this.state.auth === false ? <Redirect to="/"></Redirect> : null}
             <Header />
             <img src={close} className={style.closeto} onClick={() => this.signOut()}></img>
             <Menu type="lunch-dinner" />
@@ -128,6 +133,7 @@ class App extends Component {
             </Link>
           </Route>
           <Route path="/chef" exact>
+          {this.state.auth === false ? <Redirect to="/"></Redirect> : null}
             <Header />
             <img src={close} className={style.closetochef}  onClick={() => this.signOut()}></img>
 
